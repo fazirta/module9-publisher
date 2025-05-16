@@ -41,9 +41,27 @@ Total for 5 events: 5 × 24 = **120 bytes** of payload data
 3. Immediately in the subscriber console I saw log lines for each of the 5 events, for example:
 
    ```
-   In Fazil’s Computer [2306274983]. Message received: UserCreatedEventMessage { user_id: "1", user_name: "2306274983-Amir" }
+   In Fazil's Computer [2306274983]. Message received: UserCreatedEventMessage { user_id: "1", user_name: "2306274983-Amir" }
    ...
    In Fazil’s Computer [2306274983]. Message received: UserCreatedEventMessage { user_id: "5", user_name: "2306274983-Emir" }
    ```
 
    This confirms that all 5 events were published by the publisher and successfully consumed by the subscriber.
+
+---
+
+## Monitoring chart based on publisher
+
+![RabbitMQ Message Rate Chart](./img/038eee07-9ca9-4ede-9402-80678de1f14a.png)
+
+This chart from the RabbitMQ management dashboard shows message activity over time.
+
+When I ran the publisher using:
+
+```bash
+cargo run
+```
+
+it triggered a batch of 5 events to be sent to the message broker. Each time this happened, the message rate graph spiked. You can see sharp rises in the **Publish** and **Deliver (manual ack)** lines, which represent the messages being pushed by the publisher and received by the subscriber.
+
+The more times I ran the publisher, the more spikes appeared—each spike visually confirms that RabbitMQ handled a batch of 5 messages. This makes the chart a live monitor for tracking how often messages are being pushed and processed in real time.
